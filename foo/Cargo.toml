@@ -1,0 +1,9 @@
+[package]
+name = "foo"
+version = "0.1.0"
+authors = ["Alexandru Dan <dan.alex97@yahoo.com>"]
+edition = "2018"
+
+[dependencies]
+clap = "2.27.1" 
+rand = { git = "https://github.com/rust-lang-nursery/rand" }
