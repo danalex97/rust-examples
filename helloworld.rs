@@ -1,4 +1,4 @@
-use std::fmt::{self, Formatter, Display};
+use std::fmt::{Formatter, Display, Result};
 
 struct City {
     name: &'static str,
@@ -7,7 +7,7 @@ struct City {
 }
 
 impl Display for City {
-    fn fmt(&self, f: &mut Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut Formatter) -> Result {
         let lat_c = if self.lat >= 0.0 { 'N' } else { 'S' };
         let lon_c = if self.lon >= 0.0 { 'E' } else { 'W' };
 
@@ -28,22 +28,22 @@ struct Person<'a> {
     age: u8,
 }
 
-impl fmt::Display for Structure {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+impl Display for Structure {
+    fn fmt(&self, f: &mut Formatter) -> Result {
         write!(f, "s({})", self.0)
     }
 }
 
-impl fmt::Display for Deep {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+impl Display for Deep {
+    fn fmt(&self, f: &mut Formatter) -> Result {
         write!(f, "d({})", self.0)
     }
 }
 
 struct List(Vec<i32>);
 
-impl fmt::Display for List {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+impl Display for List {
+    fn fmt(&self, f: &mut Formatter) -> Result {
         let vec = &self.0;
 
         write!(f, "[")?;
@@ -68,8 +68,8 @@ struct Color {
     blue: u8,
 }
 
-impl fmt::Display for Color {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+impl Display for Color {
+    fn fmt(&self, f: &mut Formatter) -> Result {
         let num =
             self.red as u32 * 16 * 16 +
             self.green as u32 * 16 +
