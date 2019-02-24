@@ -5,3 +5,5 @@ helloworld
 module
 primitives
 types_cf
+generics
+traits
