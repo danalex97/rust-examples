@@ -3,7 +3,7 @@ use std::env;
 mod examples;
 use examples::intro::{simple_example, hello_world};
 use examples::core::{dataflow, timestamps, progress};
-use examples::building::{inputs, outputs};
+use examples::building::{inputs, outputs, operators};
 
 fn extract(args: Vec<String>) -> Option<String> {
     for arg in args.iter() {
@@ -33,6 +33,7 @@ fn main() {
             // building dataflows
             "inputs" => inputs::run(),
             "outputs" => outputs::run(),
+            "operators" => operators::run(),
 
             _ => ()
         }

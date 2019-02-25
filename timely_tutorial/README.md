@@ -7,7 +7,7 @@
 - Examples:
   - intro: `hello-hello`, `simple-example`
   - core: `dataflow`, `timestamps`, `progress`
-  - building: `inputs`, `outputs`
+  - building: `inputs`, `outputs`, `operators`
 
 - Build and run:
 ```
