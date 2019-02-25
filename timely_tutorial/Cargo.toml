@@ -1,0 +1,8 @@
+[package]
+name = "timely_tutorial"
+version = "0.1.0"
+authors = ["Alexandru Dan <dan.alex97@yahoo.com>"]
+edition = "2018"
+
+[dependencies]
+timely = "0.8"
