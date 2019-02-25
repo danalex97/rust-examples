@@ -1,7 +1,7 @@
 extern crate timely;
 use timely::dataflow::operators::{ToStream, Inspect};
 
-fn run() {
+pub fn run() {
     timely::example(|scope| {
         (0..10)
             .to_stream(scope)
