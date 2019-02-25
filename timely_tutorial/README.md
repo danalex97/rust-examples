@@ -6,7 +6,7 @@
 
 - Examples:
   - intro: `hello-hello`, `simple-example`
-  - core: ...
+  - core: `dataflow`, `timestamps`, `progress`
 
 - Build and run:
 ```

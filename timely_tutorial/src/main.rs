@@ -2,7 +2,7 @@ use std::env;
 
 mod examples;
 use examples::intro::{simple_example, hello_world};
-use examples::core::{dataflow};
+use examples::core::{dataflow, timestamps, progress};
 
 fn extract(args: Vec<String>) -> Option<String> {
     for arg in args.iter() {
@@ -26,6 +26,8 @@ fn main() {
 
             // core concepts
             "dataflow" => dataflow::run(),
+            "timestamps" => timestamps::run(),
+            "progress" => progress::run(),
 
             _ => ()
         }

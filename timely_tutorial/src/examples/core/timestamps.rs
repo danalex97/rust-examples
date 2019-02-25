@@ -9,24 +9,23 @@ pub fn run() {
         let index = worker.index();
         let mut input = InputHandle::new();
 
-        // Create a new input, exchange data, and inspect its output:
-        //   - there are 2 dataflow operators: exchange and inspect
-        //   - the `exchange` operator gets datum and hands it downstream
-        //   - the `inspect` oprator takes action for each datum
+        // Timestamps are used to correlate inputs and outputs.
+        //  When we introduce records with some logical timestamp, unless our dataflow computation changes the timestamps,
+        //  we expect to see corresponding outputs with that same timestamp.
+        //   - inspect_batch gets access to batches of records with the *same timestamp*
         let probe = worker.dataflow(|scope|
             scope.input_from(&mut input)
-                .exchange(|x| *x) // not without exchange the output will go to a single node
-                .inspect(|x| {
-                    let limit = (*x as f64).sqrt() as u64;
-                    if *x > 1 && (2 .. limit + 1).all(|i| x % i > 0) {
-                        println!("prime number found: {}", x)
+                .exchange(|x| *x)
+                .inspect_batch(move |t, xs| {
+                    for x in xs.iter() {
+                        println!("worker {}:\thello {} @ {:?}", index, x, t)
                     }
                 })
                 .probe()
         );
 
         // introduce new data
-        for round in 0..50 {
+        for round in 0..10 {
             if worker.index() == 0 {
                 input.send(round);
             }
