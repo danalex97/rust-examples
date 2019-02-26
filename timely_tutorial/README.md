@@ -4,10 +4,11 @@
 
 #### Running an example
 
-- Examples:
+- Examples: run examples by replacing `<example-name>` in the commands below
   - intro: `hello-hello`, `simple-example`
   - core: `dataflow`, `timestamps`, `progress`
   - building: `inputs`, `outputs`, `operators`, `creating-operators`
+
 
 - Build and run:
 ```
@@ -103,3 +104,10 @@ The statement `worker.step()` tells the worker that now is a good time to schedu
 #### Extending dataflows
 
 A worker can spawn an arbitrary number of dataflows and will clean after each one after its complete.
+
+### Advanced Dataflows
+
+- Iterations: `iteration`
+- Capture are replay: `capture-replay`
+
+### Internals

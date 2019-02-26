@@ -4,6 +4,7 @@ mod examples;
 use examples::intro::{simple_example, hello_world};
 use examples::core::{dataflow, timestamps, progress};
 use examples::building::{inputs, outputs, operators, creating_operators, word_count};
+use examples::advanced::{iteration, capture_replay};
 
 fn extract(args: Vec<String>) -> Option<String> {
     for arg in args.iter() {
@@ -38,6 +39,12 @@ fn main() {
             "creating-operators" => creating_operators::run(),
             "word-count" => word_count::run(),
             "word_count" => word_count::run(),
+
+            // advanced dataflos
+            "iteration" => iteration::run(),
+            "iterations" => iteration::run(),
+            "capture-replay" => capture_replay::run(),
+            "capture_replay" => capture_replay::run(),
 
             _ => (),
         }
