@@ -109,5 +109,7 @@ A worker can spawn an arbitrary number of dataflows and will clean after each on
 
 - Iterations: `iteration`
 - Capture are replay: `capture-replay`
+   - `capture_into` is an unary operator that produces no output, basically reacting when frontier changes or when presented with new computations: both cases feeding data via some implementer of EventPusher
+   - `replay_into` takes a sequence of events and reproduces a stream as it was recorded
 
 ### Internals
