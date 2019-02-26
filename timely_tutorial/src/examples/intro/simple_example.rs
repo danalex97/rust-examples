@@ -22,6 +22,9 @@ pub fn run() {
             if index == 0 {
                 input.send(round);
             }
+            
+            // `advance_to` is a signal to the system that we are not going to produce any
+            // data with a timestamp less than or equal to round;
             input.advance_to(round + 1);
             while probe.less_than(input.time()) {
                 worker.step();

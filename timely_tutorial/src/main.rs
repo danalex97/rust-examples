@@ -3,7 +3,7 @@ use std::env;
 mod examples;
 use examples::intro::{simple_example, hello_world};
 use examples::core::{dataflow, timestamps, progress};
-use examples::building::{inputs, outputs, operators, creating_operators};
+use examples::building::{inputs, outputs, operators, creating_operators, word_count};
 
 fn extract(args: Vec<String>) -> Option<String> {
     for arg in args.iter() {
@@ -36,6 +36,8 @@ fn main() {
             "operators" => operators::run(),
             "creating_operators" => creating_operators::run(),
             "creating-operators" => creating_operators::run(),
+            "word-count" => word_count::run(),
+            "word_count" => word_count::run(),
 
             _ => (),
         }
