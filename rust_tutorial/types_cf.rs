@@ -92,8 +92,7 @@ fn main() {
     for x in 1..=10 { print!("{} ", x); } println!("");
 
     // note vec! is a macro for declaring a vector
-    let names = vec!["Bob", "Frank", "Ferris"];
-    for name in names.into_iter() {
+    for name in vec!["Bob", "Frank", "Ferris"].into_iter() {
         // iter leaves collection untouched by borrowing
         // into_iter consumes collection
         // iter_mut allows to modify collection via mutable borrowing

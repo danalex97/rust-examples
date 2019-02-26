@@ -1,6 +1,7 @@
 extern crate timely;
 
-use timely::dataflow::operators::ToStream;
+use std::collections::HashMap;
+use timely::dataflow::operators::{ToStream, FrontierNotificator};
 use timely::dataflow::operators::generic::operator::Operator;
 use timely::dataflow::channels::pact::Pipeline;
 
@@ -73,6 +74,51 @@ pub fn run() {
                     // stop transmitting
                     cap = None;
                 }
+            }
+        });
+    });
+
+    // capabilities are reported through `frontiers`; each input has an associated `frontier`,
+    // which is a description of timestamps that might arrive to that input in the future
+    //  - operators may what to check that their output is correct by looking at the times
+    //    provided by `input.frontier`(we say time since we may have "partialy ordered" time)
+    // ==> we use Notificator - a helper that says when is safe to send data(via frontiers)
+
+    // `concat` example
+    timely::example(|scope| {
+        let in1 = (0..10).to_stream(scope);
+        let in2 = (0..10).to_stream(scope);
+
+        in1.binary_frontier(&in2, Pipeline, Pipeline, "concat_buffer", |_capability, _info| {
+            let mut notificator = FrontierNotificator::new();
+
+            // HashMap<Time, Vec<Data>> used to buffer data that is not ready to send
+            let mut stash = HashMap::new();
+
+            move |input1, input2, output| {
+                // note we can't put this in a vector due to time misatch; we could call
+                // a function though
+                while let Some((time, data)) = input1.next() {
+                    stash.entry(time.time().clone())
+                        .or_insert(Vec::new())
+                        .push(data.replace(Vec::new()));
+                    notificator.notify_at(time.retain());
+                }
+                while let Some((time, data)) = input2.next() {
+                    stash.entry(time.time().clone())
+                        .or_insert(Vec::new())
+                        .push(data.replace(Vec::new()));
+                    notificator.notify_at(time.retain());
+                }
+
+                notificator.for_each(&[input1.frontier(), input2.frontier()], |time, _notificator| {
+                    let mut session = output.session(&time);
+                    if let Some(list) = stash.remove(time.time()) {
+                        for mut vector in list.into_iter() {
+                            session.give_vec(&mut vector);
+                        }
+                    }
+                });
             }
         });
     });
