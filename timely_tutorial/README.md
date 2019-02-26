@@ -7,13 +7,12 @@
 - Examples:
   - intro: `hello-hello`, `simple-example`
   - core: `dataflow`, `timestamps`, `progress`
-  - building: `inputs`, `outputs`, `operators`
+  - building: `inputs`, `outputs`, `operators`, `creating-operators`
 
 - Build and run:
 ```
 cargo build && cargo run -- -name=<example-name>
 ```
-
 
 - Use multiple workers:
 ```
